@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Local environments and editor state
+.venv/
+venv/
+env/
+.env
+.env.*
+.DS_Store
+.idea/
+.vscode/
+.claude/
+.history/
+CLAUDE.md
+
+# Experiment outputs and generated artifacts
+**/results/
+**/results_*/
+**/activations/
+**/filters/
+**/concepts/
+**/data/
+**/fid_stats/
+**/monitoring_snapshots/
+**/visualizations/
+**/samples/
+**/paper/
+*.pid
+*.log
+
+# Large model/data artifacts
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.npz
+*.npy
+*.pkl
+
+# Generated media and manuscript snippets
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.pdf
+*.tex

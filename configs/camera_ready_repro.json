@@ -1,0 +1,168 @@
+{
+  "defaults": {
+    "output_root": "results/camera_ready_repro",
+    "device": "cuda",
+    "smoke": {
+      "num_samples": 4,
+      "num_seeds": 4,
+      "batch_size": 4
+    },
+    "full": {
+      "num_samples": 256,
+      "num_seeds": 256,
+      "cifar_num_samples": 2048,
+      "cifar_num_seeds": 2048,
+      "batch_size": 8,
+      "cifar_na_only_batch_size": 64
+    }
+  },
+  "cifar10": {
+    "targets": {
+      "0": "airplane",
+      "1": "automobile",
+      "2": "bird",
+      "3": "cat",
+      "4": "deer",
+      "5": "dog",
+      "6": "frog",
+      "7": "horse",
+      "8": "ship",
+      "9": "truck"
+    },
+    "na_only": {
+      "runnable": true,
+      "script": "repro/run_cifar10_na_only.py",
+      "lambda": 8.0,
+      "mode": "diff",
+      "eta": 0.0,
+      "inference_steps": 100,
+      "num_components": 1000,
+      "step_window": [0, 50],
+      "sigma_end": 3.33,
+      "eval_mode": "hf_convnext",
+      "eval_model": "ahsanjavid/convnext-tiny-finetuned-cifar10"
+    },
+    "na_rfm": {
+      "runnable": true,
+      "script": "repro/run_cifar10_na_rfm.py",
+      "lambda": 3.0,
+      "w_rfm": 1.0,
+      "s": 2.0,
+      "eta": 0.0,
+      "inference_steps": 100,
+      "sigma_end": 3.33,
+      "gaussian_step_window": [0, 50],
+      "gaussian_components": 1000,
+      "rfm_window_sigma": [0.01, 11.69],
+      "block_name": "input_blocks_9",
+      "collect_ddpm_t": 60,
+      "collect_sigma": 0.21,
+      "num_per_class": 1000,
+      "rfm_bandwidth": 100.0,
+      "rfm_reg": 0.001,
+      "rfm_topk": 3,
+      "filters_dir": "repro/assets/cifar10_filters",
+      "concepts_root": "repro/assets/cifar10_concepts",
+      "eval_mode": "hf_convnext",
+      "eval_model": "ahsanjavid/convnext-tiny-finetuned-cifar10"
+    }
+  },
+  "imagenet_adm": {
+    "targets": {
+      "111": "nematode",
+      "222": "kuvasz",
+      "333": "hamster",
+      "444": "tandem_bicycle"
+    },
+    "na_rfm": {
+      "runnable": true,
+      "script": "repro/run_imagenet_na_rfm.py",
+      "inference_steps": 100,
+      "eta": 0.0,
+      "block_name": "input_blocks_15",
+      "num_wiener_components": 1000,
+      "rfm_topk": 1,
+      "batch_size": 4,
+      "eval_batch_size": 16,
+      "filters_dir": "repro/assets/imagenet_filters",
+      "concepts_root": "repro/assets/imagenet_concepts",
+      "eval_model": "facebook/deit-small-patch16-224",
+      "settings": {
+        "111": {"lambda": 2.0, "w_rfm": 0.5, "s": 12.0, "sigma_end": 3.0, "rfm_window_sigma": [0.0, 30.0]},
+        "222": {"lambda": 2.0, "w_rfm": 1.0, "s": 8.0, "sigma_end": 2.0, "rfm_window_sigma": [0.0, 80.0]},
+        "333": {"lambda": 1.0, "w_rfm": 0.5, "s": 4.0, "sigma_end": 10.0, "rfm_window_sigma": [0.0, 80.0]},
+        "444": {"lambda": 0.0, "w_rfm": 1.0, "s": 14.0, "sigma_end": null, "rfm_window_sigma": [0.0, 80.0]}
+      }
+    }
+  },
+  "celeba": {
+    "combos": [
+      "female_nonblond",
+      "female_blond",
+      "male_nonblond",
+      "male_blond",
+      "young_female",
+      "old_female",
+      "young_male",
+      "old_male"
+    ],
+    "na_rfm": {
+      "runnable": true,
+      "script": "repro/run_celeba_na_rfm.py",
+      "eta": 0.0,
+      "batch_size": 8,
+      "settings": {
+        "female_nonblond": {"method": "hybrid", "rfm_sigma_end": 0.0},
+        "female_blond": {"method": "hybrid", "rfm_sigma_end": 0.0},
+        "male_nonblond": {"method": "wiener"},
+        "male_blond": {
+          "method": "hybrid",
+          "runner": "parameter_sweep",
+          "wiener_strength": 1.5,
+          "hybrid_rfm_strength": 0.4,
+          "rfm_cfg_scale": 2.0,
+          "hybrid_rfm_sigma_start": 3.5,
+          "rfm_sigma_end": 0.0
+        },
+        "young_female": {"method": "rfm"},
+        "old_female": {"method": "hybrid", "rfm_sigma_end": 0.0},
+        "young_male": {"method": "hybrid", "rfm_sigma_end": 0.0},
+        "old_male": {"method": "rfm"}
+      }
+    }
+  },
+  "birds": {
+    "targets": {
+      "111": "brown_headed_cowbird",
+      "222": "fairy_tern",
+      "333": "lucifer_hummingbird",
+      "444": "scarlet_macaw"
+    },
+    "na_rfm": {
+      "runnable": true,
+      "script": "repro/run_birds_na_rfm.py",
+      "inference_steps": 100,
+      "eta": 0.0,
+      "block_name": "input_blocks_15",
+      "collect_sigma": 0.60,
+      "num_pos": 160,
+      "num_neg": 2000,
+      "rfm_bandwidth": 200.0,
+      "rfm_reg": 0.0001,
+      "rfm_topk": 1,
+      "rfm_window_sigma": [0.01, 157.4],
+      "batch_size": 4,
+      "eval_batch_size": 16,
+      "gaussian_components": 180,
+      "filters_dir": "repro/assets/birds_filters",
+      "concepts_root": "repro/assets/birds_concepts",
+      "eval_model": "dennisjooo/Birds-Classifier-EfficientNetB2",
+      "settings": {
+        "333": {"lambda": 3.0, "w_rfm": 0.7, "s": 5.0, "sigma_end": 10.0},
+        "444": {"lambda": 3.0, "w_rfm": 0.3, "s": 5.0, "sigma_end": 10.0},
+        "222": {"lambda": 2.0, "w_rfm": 0.3, "s": 3.0, "sigma_end": 10.0},
+        "111": {"lambda": 1.0, "w_rfm": 0.5, "s": 5.0, "sigma_end": 2.0}
+      }
+    }
+  }
+}
