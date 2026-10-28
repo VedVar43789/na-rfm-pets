@@ -1,0 +1,92 @@
+% !TEX TS-program = lualatex
+% !BIB TS-program = bibtex
+\documentclass[12pt,letterpaper]{article}
+\usepackage{style/dsc180reportstyle} % import dsc180reportstyle.sty
+\usepackage{babel}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Title and Authors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{DSC Capstone LaTeX Template}
+
+\author{Shiv Mehta \\
+  {\tt email@ucsd.edu} \\\And
+  Vedant Vardhaan \\
+  {\tt email@ucsd.edu} \\\And
+  Vishudh Shah \\
+  {\tt v8shah@ucsd.edu} \\\And
+  Yusu Wang \\
+  {\tt email@ucsd.edu} \\}
+
+\begin{document}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Abstract and Links
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstract}
+    {
+    \color{blue}
+    Replace the \texttt{lipsum[1]} in the source code with your abstract. Don't include an abstract with your Quarter 2 Proposal.
+    }
+    \textcolor{LightGrey}{\lipsum[1]}
+\end{abstract}
+
+\begin{center}
+Code: \url{https://github.com/VedVar43789/na-rfm-pets}
+\end{center}
+
+\maketoc
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Main Contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+Diffusion models generate images by progressively transforming random noise into structured samples through a learned denoising process \citep{ho2020ddpm}.
+However, producing realistic images does not by itself provide control over what those images depict.
+A pretrained model may generate a broad range of objects while offering no direct way to request a particular category or visual attribute.
+Adding control after training lets us guide the model toward specific categories or attributes without retraining it.
+The central challenge is to guide generation toward a target concept while preserving image quality and keeping the computational cost manageable.
+
+Our project studies this problem through Noise-Aligned Recursive Feature Machine Steering (NA-RFM), introduced by \cite{wang2026steering}.
+NA-RFM constructs guidance signals from labeled examples while keeping the pretrained diffusion model fixed.
+It combines a correction based on principal component analysis (PCA) at high noise levels with a learned direction in the model's internal activation space at intermediate and low noise levels.
+These signals are computed offline and reused during generation, avoiding inference-time backpropagation.
+
+We aim to reproduce the paper's ImageNet steering experiment using the released implementation, then adapt the method to the Oxford-IIIT Pet dataset.
+This adaptation will compare two levels of semantic control: generating cats versus dogs, and generating individual breeds.
+We will also investigate whether an activation direction learned at one noise level remains effective when applied at other noise levels.
+Our evaluation will examine target-class accuracy, Fr\'echet Inception Distance (FID), and computational cost, with offline preparation reported separately from sampling.
+Together, these experiments will assess how the method's effectiveness changes with target granularity and with the transfer from ImageNet to a different image dataset.
+
+\section{Methods}
+
+
+
+\section{Results}
+
+
+
+\section{Discussion}
+
+
+
+\section{Conclusion}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Reference / Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makereference
+
+\bibliography{reference}
+\bibliographystyle{style/dsc180bibstyle}
+
+\end{document}
